@@ -1,0 +1,8 @@
+toolbox.tar.gz
+*.bam
+*.bai
+*.bw
+*.bed
+*.bedgraph
+*.cram
+*.chromsizes
