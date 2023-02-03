@@ -21,7 +21,7 @@ RUN apt-get -y install \
 RUN cd /tmp && \
 	git clone https://github.com/ENCODE-DCC/kentUtils.git && \
 	cd kentUtils && \
-	git checkout  v302.1.0 && \
+	git checkout v302.1.0 && \
 	make && \
 	cp -rp bin/* /usr/local/bin && \
 	cd .. && rm -rf kentUtils
