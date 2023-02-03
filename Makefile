@@ -8,7 +8,7 @@ push: build
 	docker push $(IMAGE)
 
 build:
-	docker build -t $(IMAGE) .
+	docker buildx build --platform linux/amd64 -t $(IMAGE) .
 
 toolbox.tar.gz: build
 	docker save $(IMAGE) | gzip > $@
