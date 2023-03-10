@@ -1,4 +1,4 @@
-# BAM2BIGWIG
+# kentSrc
 
 Simple docker image that converts BAM files to bigwig files.
 
@@ -9,6 +9,6 @@ The toolbox contains standard bioinformatics tools (see `Dockerfile`) and a set 
 
 Create a bigWig coverage map from bam file:
 ```
-docker run -it --rm -v `pwd`:/work seglh/toolbox bam2bw alignments.bam
+docker run -it --rm -v `pwd`:/work seglh/kentSrc bam2bw alignments.bam
 ```
 This will create `alignments.bam.bw`.
