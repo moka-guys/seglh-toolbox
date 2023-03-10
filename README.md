@@ -1,14 +1,11 @@
-# BAM2BIGWIG
+# seglh-toolbox
+This repository should hold source code for third party tools that have been verified/validated for use.
 
-Simple docker image that converts BAM files to bigwig files.
+Where possible the source code should be taken from official images and stored here.
 
-## Tools and scripts
-The toolbox contains standard bioinformatics tools (see `Dockerfile`) and a set of convenience scripts.
+Files should be named in a way to ensure the resulting docker images can be traced back to this dockerfile, eg by capturing the Image ID in the name of the saved docker archive and the directory name in the github repo.
 
-## Usage
+Files should also be tagged with seglh/incase these tools are shared in the future.
 
-Create a bigWig coverage map from bam file:
-```
-docker run -it --rm -v `pwd`:/work seglh/toolbox bam2bw alignments.bam
-```
-This will create `alignments.bam.bw`.
+## Git tags
+Commits should be tagged to record versions of the dockerfile, eg if the dockerfile for bcftools_v1.15 dockerfile is changed, without affecting the version of bcftools deployed the tag can help distinguish which dockerfile was used for each of the docker images for that version of bcftools.

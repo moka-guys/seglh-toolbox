@@ -1,4 +1,4 @@
-IMAGE=seglh/toolbox
+IMAGE=seglh/kentSrc
 
 .PHONY: all build
 
