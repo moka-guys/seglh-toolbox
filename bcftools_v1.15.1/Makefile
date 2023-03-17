@@ -6,5 +6,5 @@ DOCKERFILE := bcftools_v1.15.1.dockerfile
 IMG_ID := $(shell docker image ls -f reference='$(APP)*' --format {{.ID}})
 build:
 	docker build -t $(REGISTRY)/$(APP) - < $(DOCKERFILE) 
-	docker save $(REGISTRY)/$(APP) | gzip > $(REGISTRY)-$(APP):$(IMG_ID).tar.gz
+	docker save $(REGISTRY)/$(APP) | gzip > $(REGISTRY)-$(APP)_$(IMG_ID).tar.gz
 	
