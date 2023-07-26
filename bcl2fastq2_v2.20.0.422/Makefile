@@ -1,5 +1,7 @@
+# Extract current commit hash
 COMMIT := $(shell git log --pretty=format:'%h' -n 1)
-BUILD := v1.15.1_$(COMMIT)
+# Version and commit hash of the build
+BUILD := v2.20.0.422_$(COMMIT)
 DIR := $(shell pwd)
 
 # Define image names
@@ -7,9 +9,11 @@ APP      := bcl2fastq2
 REGISTRY := seglh
 
 # Build tags
-IMG           := $(REGISTRY)/$(APP)
-IMG_VERSIONED := $(IMG):$(BUILD)
-IMG_LATEST    := $(IMG):latest
+REPOSITORY	  := $(REGISTRY)/$(APP)
+IMG_VERSIONED := $(REPOSITORY):$(BUILD)
+IMG_LATEST    := $(REPOSITORY):latest
+
+# Command to pull out the image ID from the newly built app
 
 .PHONY: push build version cleanbuild
 
@@ -20,7 +24,11 @@ push: build
 build: version
 	docker buildx build --platform linux/amd64 -t $(IMG_VERSIONED) . || docker build -t $(IMG_VERSIONED) .
 	docker tag $(IMG_VERSIONED) $(IMG_LATEST)
-	docker save $(IMG_VERSIONED) | gzip > $(DIR)/$(REGISTRY)-$(APP):$(BUILD).tar.gz
+	$(eval IMAGE_ID := $(shell sudo docker image ls -f reference='$(IMG_VERSIONED)' -q))
+	docker save $(IMG_VERSIONED) | gzip > $(DIR)/$(REGISTRY)-$(APP):$(BUILD)-$(IMAGE_ID).tar.gz
 
 cleanbuild:
 	docker buildx build --platform linux/amd64 --no-cache -t $(IMG_VERSIONED) .
+	docker tag $(IMG_VERSIONED) $(IMG_LATEST)
+	$(eval IMAGE_ID := $(shell sudo docker image ls -f reference='$(IMG_VERSIONED)' -q))
+	docker save $(IMG_VERSIONED) | gzip > $(DIR)/$(REGISTRY)-$(APP):$(BUILD)-$(IMAGE_ID).tar.gz
